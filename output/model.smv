@@ -1,0 +1,40 @@
+MODULE main
+
+VAR
+STOPBUTTONPRESSED: boolean;
+STARTBUTTONPRESSED: boolean;
+MOTORRUNNING: boolean;
+MOTORENABLED: boolean;
+line: integer;
+
+ASSIGN
+init(STOPBUTTONPRESSED) := FALSE;
+init(STARTBUTTONPRESSED) := FALSE;
+init(MOTORRUNNING) := FALSE;
+init(MOTORENABLED) := FALSE;
+init(line) := 1;
+
+next(line) := case
+	line = 1 & (STARTBUTTONPRESSED & (! MOTORRUNNING)): line + 1; -- if(True)
+	line = 1: 4; -- if(False)
+	line = 4 & (STOPBUTTONPRESSED): line + 1; -- if(True)
+	line = 4: 7; -- if(False)
+	line = 7 & (MOTORENABLED): line + 1; -- if(True)
+	line = 7: 10; -- if(False)
+	line = 9: 9; 
+	TRUE: line + 1; 
+esac;
+
+next(STOPBUTTONPRESSED) := STOPBUTTONPRESSED;
+
+next(STARTBUTTONPRESSED) := STARTBUTTONPRESSED;
+
+next(MOTORRUNNING) := MOTORRUNNING;
+
+next(MOTORENABLED) := case
+	line = 2: TRUE;
+	line = 5: FALSE;
+	line = 8: TRUE;
+	TRUE: MOTORENABLED; 
+esac;
+

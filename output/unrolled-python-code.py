@@ -1,0 +1,13 @@
+from pynuxmv.main import *
+
+STOPBUTTONPRESSED: bool = False
+STARTBUTTONPRESSED: bool = False
+MOTORRUNNING: bool = False
+MOTORENABLED: bool = False
+if STARTBUTTONPRESSED and not MOTORRUNNING:
+    MOTORENABLED = True
+if STOPBUTTONPRESSED:
+    MOTORENABLED = False
+if MOTORENABLED:
+    MOTORENABLED = True
+
